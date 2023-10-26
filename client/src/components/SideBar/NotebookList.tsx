@@ -8,8 +8,8 @@ export const NotebookList: FC = () => {
         <ul className=' rounded'>
             {notebooks.map((notebook) => (
                 <NotebookItem
-                    key={notebook.id}
-                    id={notebook.id}
+                    key={notebook._id}
+                    _id={notebook._id}
                     isActive={notebook.isActive}
                     title={notebook.title}
                     notebook={notebook}

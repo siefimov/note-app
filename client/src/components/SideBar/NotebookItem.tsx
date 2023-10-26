@@ -1,8 +1,9 @@
 import { FC, useEffect, useState, useRef } from 'react';
 import { useAppDispatch } from '../../store/hooks';
-import { changeNotebookTitle, deleteNotebook, changeActiveNotebook } from '../../store/notebooks/notebook.slice';
+import { deleteNotebook, changeActiveNotebook } from '../../store/notebooks/notebook.slice';
 import { Notebook } from '../../store/notebooks/initialState';
 import { GrEdit, GrFormTrash } from 'react-icons/gr';
+import { editNotebookTitle } from '../../store/notebooks/notebook.actions';
 
 interface INotebookItemProps {
     _id: number | null;
@@ -30,7 +31,7 @@ export const NotebookItem: FC<INotebookItemProps> = (props) => {
     };
 
     const handleSaveEdit = () => {
-        dispatch(changeNotebookTitle({ _id: editedNotebookId, title: editedNotebookTitle, isActive: true }));
+        dispatch(editNotebookTitle({ _id: editedNotebookId, title: editedNotebookTitle, isActive: true }));
         setIsEditing(false);
         setEditedNotebookId(null);
         setEditedNotebookTitle('');

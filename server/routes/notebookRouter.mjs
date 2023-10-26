@@ -25,4 +25,20 @@ router.post('/', async (req, res) => {
     }
 });
 
+router.patch('/', async (req, res) => {
+    try {
+        const { _id, title } = req.body;
+
+        const updatedNotebook = await Notebook.findOneAndUpdate({ _id }, { title }, { new: true });
+
+        if (!updatedNotebook) {
+            return res.status(404).json({ message: 'Notebook not found' });
+        }
+
+        res.status(200).json(updatedNotebook);
+    } catch (error) {
+        res.status(500).json({ error: 'Error updating the notebook name.' });
+    }
+});
+
 export default router;

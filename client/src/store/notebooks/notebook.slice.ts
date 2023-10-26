@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { initialState } from './initialState';
 import { Notebook } from './initialState';
-import { getAllNotebooks, addNotebook } from './notebook.actions';
+import { getAllNotebooks, addNotebook, editNotebookTitle } from './notebook.actions';
 
 const notebooksSlice = createSlice({
     name: 'notebooks',
@@ -15,16 +15,16 @@ const notebooksSlice = createSlice({
         //     });
         // },
         deleteNotebook(state, action: PayloadAction<number | null>) {
-            state.list = state.list.filter((notebook) => notebook.id !== action.payload);
+            state.list = state.list.filter((notebook) => notebook._id !== action.payload);
         },
-        changeNotebookTitle(state, action: PayloadAction<Notebook>) {
-            const { id, title } = action.payload;
+        // changeNotebookTitle(state, action: PayloadAction<Notebook>) {
+        //     const { _id, title } = action.payload;
 
-            const notebookToChange = state.list.find((notebook) => notebook.id === id);
-            if (notebookToChange) {
-                notebookToChange.title = title;
-            }
-        },
+        //     const notebookToChange = state.list.find((notebook) => notebook._id === _id);
+        //     if (notebookToChange) {
+        //         notebookToChange.title = title;
+        //     }
+        // },
         changeActiveNotebook(state, action: PayloadAction<number | null>) {
             state.list.forEach((notebook) => {
                 if (notebook._id === action.payload) {
@@ -45,15 +45,21 @@ const notebooksSlice = createSlice({
         });
         builder.addCase(addNotebook.fulfilled, (state, action) => {
             state.list.push({
-                id: action.payload._id,
+                _id: action.payload._id,
                 title: action.payload.title,
                 isActive: false,
             });
         });
-
-    }
+        builder.addCase(editNotebookTitle.fulfilled, (state, action) => {
+            const { _id, title } = action.payload;
+            const notebookToChange = state.list.find((notebook) => notebook._id === _id);
+            if (notebookToChange) {
+                notebookToChange.title = title;
+            }
+        });
+    },
 });
 
-export const { deleteNotebook, changeNotebookTitle, changeActiveNotebook } = notebooksSlice.actions;
+export const { deleteNotebook, changeActiveNotebook } = notebooksSlice.actions;
 
 export default notebooksSlice.reducer;

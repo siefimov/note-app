@@ -32,7 +32,7 @@ const editNotebookTitle = createAsyncThunk(ActionTypes.EDIT_NOTEBOOK, async (par
         headers: {
             'Content-Type': ContentType.JSON,
         },
-        body: JSON.stringify({ _id: param.title, title: param.title }),
+        body: JSON.stringify({ _id: param._id, title: param.title }),
     });
     if (response.ok) {
         const data = await response.json();

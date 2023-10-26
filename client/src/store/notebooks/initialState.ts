@@ -1,5 +1,5 @@
 export interface Notebook {
-    id: number | null;
+    _id: number | null;
     title: string;
     isActive: boolean;
 }

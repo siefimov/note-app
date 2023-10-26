@@ -5,14 +5,14 @@ import { Notebook } from '../../store/notebooks/initialState';
 import { GrEdit, GrFormTrash } from 'react-icons/gr';
 
 interface INotebookItemProps {
-    id: number | null;
+    _id: number | null;
     isActive: boolean;
     title: string;
     notebook: Notebook;
 }
 
 export const NotebookItem: FC<INotebookItemProps> = (props) => {
-    const { id, isActive, title, notebook } = props;
+    const { _id, isActive, title, notebook } = props;
 
     const inputRef: React.RefObject<HTMLInputElement> = useRef(null);
 
@@ -25,12 +25,12 @@ export const NotebookItem: FC<INotebookItemProps> = (props) => {
     const handleStartEdit = (notebook: Notebook, e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
         e.stopPropagation();
         setIsEditing(true);
-        setEditedNotebookId(notebook.id);
+        setEditedNotebookId(notebook._id);
         setEditedNotebookTitle(notebook.title);
     };
 
     const handleSaveEdit = () => {
-        dispatch(changeNotebookTitle({ id: editedNotebookId, title: editedNotebookTitle, isActive: true }));
+        dispatch(changeNotebookTitle({ _id: editedNotebookId, title: editedNotebookTitle, isActive: true }));
         setIsEditing(false);
         setEditedNotebookId(null);
         setEditedNotebookTitle('');
@@ -50,6 +50,7 @@ export const NotebookItem: FC<INotebookItemProps> = (props) => {
     };
 
     const handleIsNotebookActive = (notebookId: number | null) => {
+        console.log(notebookId);
         if (isEditing) return;
         dispatch(changeActiveNotebook(notebookId));
     };
@@ -63,8 +64,8 @@ export const NotebookItem: FC<INotebookItemProps> = (props) => {
 
     return (
         <li
-            key={id}
-            onClick={() => handleIsNotebookActive(notebook.id)}
+            key={_id}
+            onClick={() => handleIsNotebookActive(notebook._id)}
             onMouseOver={() => handleOnMouseOver(true)}
             onMouseLeave={() => handleOnMouseLeave(false)}
             className={` flex justify-between my-4 p-2 rounded cursor-pointer border border-slate-400 z-0 ${
@@ -96,7 +97,7 @@ export const NotebookItem: FC<INotebookItemProps> = (props) => {
                     >
                         <GrEdit />
                     </span>
-                    <span onClick={() => handleClickDelete(notebook.id)} className='rounded-full p-1 bg-slate-200'>
+                    <span onClick={() => handleClickDelete(notebook._id)} className='rounded-full p-1 bg-slate-200'>
                         <GrFormTrash />
                     </span>
                 </div>

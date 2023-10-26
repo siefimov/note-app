@@ -27,7 +27,7 @@ const notebooksSlice = createSlice({
         },
         changeActiveNotebook(state, action: PayloadAction<number | null>) {
             state.list.forEach((notebook) => {
-                if (notebook.id === action.payload) {
+                if (notebook._id === action.payload) {
                     if (notebook.isActive) {
                         notebook.isActive = false;
                     } else {

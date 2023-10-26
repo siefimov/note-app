@@ -1,12 +1,12 @@
 import { useState, useRef, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 
-import { addNotebook } from '../../store/notebooks/notebook.slice';
+// import { addNotebook } from '../../store/notebooks/notebook.slice';
 import { Logo } from './Logo';
 import { SidebarHeader } from './SidebarHeader';
 import { NotebookList } from './NotebookList';
 
-import { getAllNotebooks } from '../../store/notebooks/notebook.actions';
+import { getAllNotebooks, addNotebook } from '../../store/notebooks/notebook.actions';
 
 export const SideBar: React.FC = () => {
     const dispatch = useAppDispatch();

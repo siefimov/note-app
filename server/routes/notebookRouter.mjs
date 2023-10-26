@@ -20,7 +20,9 @@ router.post('/', async (req, res) => {
 
         const savedNotebook = await newNotebook.save();
         res.status(201).json(savedNotebook);
-    } catch (error) {}
+    } catch (error) {
+        res.json(error);
+    }
 });
 
 export default router;

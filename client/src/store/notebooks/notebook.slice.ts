@@ -1,19 +1,19 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { initialState } from './initialState';
 import { Notebook } from './initialState';
-import { getAllNotebooks } from './notebook.actions';
+import { getAllNotebooks, addNotebook } from './notebook.actions';
 
 const notebooksSlice = createSlice({
     name: 'notebooks',
     initialState,
     reducers: {
-        addNotebook(state, action: PayloadAction<string>) {
-            state.list.push({
-                id: state.list.length + Math.round(Math.random() * 10000),
-                title: action.payload,
-                isActive: false,
-            });
-        },
+        // addNotebook(state, action: PayloadAction<string>) {
+        //     state.list.push({
+        //         id: state.list.length + Math.round(Math.random() * 10000),
+        //         title: action.payload,
+        //         isActive: false,
+        //     });
+        // },
         deleteNotebook(state, action: PayloadAction<number | null>) {
             state.list = state.list.filter((notebook) => notebook.id !== action.payload);
         },
@@ -42,10 +42,18 @@ const notebooksSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(getAllNotebooks.fulfilled, (state, action) => {
             state.list = action.payload;
-        })
+        });
+        builder.addCase(addNotebook.fulfilled, (state, action) => {
+            state.list.push({
+                id: action.payload._id,
+                title: action.payload.title,
+                isActive: false,
+            });
+        });
+
     }
 });
 
-export const { addNotebook, deleteNotebook, changeNotebookTitle, changeActiveNotebook } = notebooksSlice.actions;
+export const { deleteNotebook, changeNotebookTitle, changeActiveNotebook } = notebooksSlice.actions;
 
 export default notebooksSlice.reducer;

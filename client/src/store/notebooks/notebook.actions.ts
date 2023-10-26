@@ -1,18 +1,19 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ActionTypes } from './actionTypes';
 import { Notebook } from './initialState';
+import { ApiPath, BASE_URL, ContentType, HttpMethod } from '../../constants';
 
 const getAllNotebooks = createAsyncThunk(ActionTypes.NOTEBOOKS, async () => {
-    const response = await fetch('http://localhost:5500/api/notebooks');
+    const response = await fetch(`${BASE_URL}${ApiPath.NOTEBOOKS}`);
     const data = await response.json();
     return data;
 });
 
 const addNotebook = createAsyncThunk(ActionTypes.ADD_NOTEBOOK, async (param: string) => {
-    const response = await fetch('http://localhost:5500/api/notebooks', {
-        method: 'POST',
+    const response = await fetch(`${BASE_URL}${ApiPath.NOTEBOOKS}`, {
+        method: HttpMethod.POST,
         headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': ContentType.JSON,
         },
         body: JSON.stringify({ title: param }),
     });
@@ -26,10 +27,10 @@ const addNotebook = createAsyncThunk(ActionTypes.ADD_NOTEBOOK, async (param: str
 });
 
 const editNotebookTitle = createAsyncThunk(ActionTypes.EDIT_NOTEBOOK, async (param: Notebook) => {
-    const response = await fetch('http://localhost:5500/api/notebooks', {
-        method: 'PATCH',
+    const response = await fetch(`${BASE_URL}${ApiPath.NOTEBOOKS}`, {
+        method: HttpMethod.PATCH,
         headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': ContentType.JSON,
         },
         body: JSON.stringify({ _id: param.title, title: param.title }),
     });

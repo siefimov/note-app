@@ -1,5 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ActionTypes } from './actionTypes';
+import { Notebook } from './initialState';
 
 const getAllNotebooks = createAsyncThunk(ActionTypes.NOTEBOOKS, async () => {
     const response = await fetch('http://localhost:5500/api/notebooks');
@@ -13,7 +14,7 @@ const addNotebook = createAsyncThunk(ActionTypes.ADD_NOTEBOOK, async (param: str
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ title: param }), // Відправляємо title як властивість об'єкта
+        body: JSON.stringify({ title: param }),
     });
 
     if (response.ok) {
@@ -24,4 +25,20 @@ const addNotebook = createAsyncThunk(ActionTypes.ADD_NOTEBOOK, async (param: str
     }
 });
 
-export { addNotebook, getAllNotebooks };
+const editNotebookTitle = createAsyncThunk(ActionTypes.EDIT_NOTEBOOK, async (param: Notebook) => {
+    const response = await fetch('http://localhost:5500/api/notebooks', {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ _id: param.title, title: param.title }),
+    });
+    if (response.ok) {
+        const data = await response.json();
+        return data;
+    } else {
+        throw new Error('Failed to edit notebook title');
+    }
+});
+
+export { addNotebook, getAllNotebooks, editNotebookTitle };

@@ -1,7 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 
-// import { addNotebook } from '../../store/notebooks/notebook.slice';
 import { Logo } from './Logo';
 import { SidebarHeader } from './SidebarHeader';
 import { NotebookList } from './NotebookList';

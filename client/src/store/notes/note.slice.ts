@@ -1,15 +1,16 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { initialState } from './initialState';
 import { Note } from './initialState';
+import { getNotes, addNote } from './note.actions';
 
 const notesSlice = createSlice({
     name: 'notes',
     initialState,
     reducers: {
-        addNote(state, action: PayloadAction<Note>) {
-            state.list.push(action.payload);
-            state.count += 1;
-        },
+        // addNote(state, action: PayloadAction<Note>) {
+        //     state.list.push(action.payload);
+        //     state.count += 1;
+        // },
         deleteNote(state, action: PayloadAction<number | null>) {
             state.list = state.list.filter((note) => note.id !== action.payload);
             state.count -= 1;
@@ -32,8 +33,17 @@ const notesSlice = createSlice({
             }
         },
     },
+    extraReducers: (builder) => {
+        builder.addCase(getNotes.fulfilled, (state, action) => {
+            state.list = action.payload;
+        });
+        builder.addCase(addNote.fulfilled, (state, action) => {
+            state.list.push(action.payload);
+            state.count += 1;
+        });
+    },
 });
 
-export const { addNote, deleteNote, updateNote } = notesSlice.actions;
+export const { deleteNote, updateNote } = notesSlice.actions;
 
 export default notesSlice.reducer;

@@ -1,4 +1,5 @@
 import express from 'express';
+import mongoose from 'mongoose';
 const router = express.Router();
 
 import { Notebook } from '../models/notebook.mjs';
@@ -38,6 +39,27 @@ router.patch('/', async (req, res) => {
         res.status(200).json(updatedNotebook);
     } catch (error) {
         res.status(500).json({ error: 'Error updating the notebook name.' });
+    }
+});
+
+router.delete('/:_id', async (req, res) => {
+    try {
+        const notebookId = req.params._id;
+
+        if (!notebookId || !mongoose.isValidObjectId(notebookId)) {
+            return res.status(400).json({ error: 'Некоректний _id для видалення блокноту' });
+        }
+
+        const deletedNotebook = await Notebook.findByIdAndDelete(notebookId);
+
+        if (!deletedNotebook) {
+            return res.status(404).json({ error: 'Блокнот не знайдено' });
+        }
+
+        res.status(200).json(deletedNotebook);
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({ error: 'Error deleting the notebook' });
     }
 });
 

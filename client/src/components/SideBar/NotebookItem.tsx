@@ -1,9 +1,9 @@
 import { FC, useEffect, useState, useRef } from 'react';
 import { useAppDispatch } from '../../store/hooks';
-import { deleteNotebook, changeActiveNotebook } from '../../store/notebooks/notebook.slice';
+import { changeActiveNotebook } from '../../store/notebooks/notebook.slice';
 import { Notebook } from '../../store/notebooks/initialState';
 import { GrEdit, GrFormTrash } from 'react-icons/gr';
-import { editNotebookTitle } from '../../store/notebooks/notebook.actions';
+import { editNotebookTitle, deleteNotebook, getAllNotebooks } from '../../store/notebooks/notebook.actions';
 
 interface INotebookItemProps {
     _id: number | null;
@@ -37,8 +37,13 @@ export const NotebookItem: FC<INotebookItemProps> = (props) => {
         setEditedNotebookTitle('');
     };
 
-    const handleClickDelete = (notebookId: number | null) => {
-        dispatch(deleteNotebook(notebookId));
+    const handleClickDelete = async (notebookId: number | null) => {
+        if (notebookId !== null) {
+            const response = await dispatch(deleteNotebook(notebookId));
+            if (response) {
+                dispatch(getAllNotebooks());
+            }
+        }
     };
 
     const [features, setFeatures] = useState<boolean>(false);
@@ -51,12 +56,10 @@ export const NotebookItem: FC<INotebookItemProps> = (props) => {
     };
 
     const handleIsNotebookActive = (notebookId: number | null) => {
-        console.log(notebookId);
         if (isEditing) return;
         dispatch(changeActiveNotebook(notebookId));
     };
 
-    // useEffect
     useEffect(() => {
         if (isEditing) {
             inputRef.current?.focus();

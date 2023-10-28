@@ -32,9 +32,15 @@ router.post('/', async (req, res) => {
 
 router.patch('/', async (req, res) => {
     try {
-        const { _id, title, description } = req.body;
+        const { _id, title, description, updatedAt } = req.body;
 
-        const updatedNote = await NoteModel.findOneAndUpdate({ _id }, { title }, { description }, { new: true });
+        const updateFields = {
+            title,
+            description,
+            updatedAt,
+        };
+
+        const updatedNote = await NoteModel.findByIdAndUpdate(_id, updateFields, { new: true });
 
         if (!updatedNote) {
             return res.status(404).json({ message: 'Note not found' });

@@ -2,7 +2,7 @@ export interface INoteItemProps {
     title: string;
     description: string;
     createdAt: string;
-    _id: number | null;
+    _id: number;
 }
 
 export type updatedNoteType = {

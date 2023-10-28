@@ -47,4 +47,16 @@ const addNote = createAsyncThunk(ActionTypes.ADD_NOTE, async (param: addNotePara
     }
 });
 
-export { getNotes, addNote };
+const deleteNote = createAsyncThunk(ActionTypes.DELETE_NOTE, async (param: number | null) => {
+    const response = await fetch(`${BASE_URL}${ApiPath.NOTES}/${param}`, {
+        method: HttpMethod.DELETE,
+    });
+    if (response.ok) {
+        const data = await response.json();
+        return data;
+    } else {
+        throw new Error('Failed to delete notebook');
+    }
+});
+
+export { getNotes, addNote, deleteNote };

@@ -4,10 +4,9 @@ const router = express.Router();
 
 import { NoteModel } from '../models/notes.mjs';
 
-router.get('/:notebookId', async (req, res) => {
+router.get('/', async (req, res) => {
     try {
-        const notebookId = req.params.notebookId;
-        const allNotes = await NoteModel.find({ notebookId });
+        const allNotes = await NoteModel.find({});
         res.status(200).json(allNotes);
     } catch (error) {
         res.status(500).json({ error: 'Error getting notes by notebook id' });
@@ -33,9 +32,15 @@ router.post('/', async (req, res) => {
 
 router.patch('/', async (req, res) => {
     try {
-        const { _id, title, description } = req.body;
+        const { _id, title, description, updatedAt } = req.body;
 
-        const updatedNote = await NoteModel.findOneAndUpdate({ _id }, { title }, { description }, { new: true });
+        const updateFields = {
+            title,
+            description,
+            updatedAt,
+        };
+
+        const updatedNote = await NoteModel.findByIdAndUpdate(_id, updateFields, { new: true });
 
         if (!updatedNote) {
             return res.status(404).json({ message: 'Note not found' });

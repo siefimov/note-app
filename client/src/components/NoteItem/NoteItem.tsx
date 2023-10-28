@@ -1,25 +1,28 @@
 import { useState } from 'react';
 import { GrEdit, GrFormTrash } from 'react-icons/gr';
 import { useAppDispatch } from '../../store/hooks';
-import { deleteNote, updateNote } from '../../store/notes/note.slice';
+// import { updateNote } from '../../store/notes/note.slice';
+import { deleteNote, getNotes, updateNote } from '../../store/notes/note.actions';
 
 import { ChangeNoteModal } from './components/ChangeNoteModal';
 import { INoteItemProps, updatedNoteType } from './types';
 
-export const NoteItem: React.FunctionComponent<INoteItemProps> = ({ title, description, createdAt, id }) => {
+export const NoteItem: React.FunctionComponent<INoteItemProps> = ({ title, description, createdAt, _id }) => {
     const [note, setNote] = useState<updatedNoteType>({ title: title, description: description, updatedAt: '' });
     const [showModal, setShowModal] = useState(false);
 
     const dispatch = useAppDispatch();
 
-    const handleRemoveNote = () => {
-        dispatch(deleteNote(id));
+    const handleRemoveNote = async (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
+        e.stopPropagation();
+        await dispatch(deleteNote(_id));
+        dispatch(getNotes());
     };
 
     const handleSaveNote = () => {
         dispatch(
             updateNote({
-                id: id,
+                _id: _id,
                 title: note.title,
                 description: note.description,
                 updatedAt: new Date().toISOString(),
@@ -47,7 +50,7 @@ export const NoteItem: React.FunctionComponent<INoteItemProps> = ({ title, descr
                             <GrEdit />
                         </span>
                         <span
-                            onClick={handleRemoveNote}
+                            onClick={(e) => handleRemoveNote(e)}
                             className=' hover:bg-red-200 hover:rounded-full p-2 border border-slate-300 rounded-full'
                         >
                             <GrFormTrash />

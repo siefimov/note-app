@@ -6,6 +6,7 @@ import { SidebarHeader } from './SidebarHeader';
 import { NotebookList } from './NotebookList';
 
 import { getAllNotebooks, addNotebook } from '../../store/notebooks/notebook.actions';
+import { getNotes } from '../../store/notes/note.actions';
 
 export const SideBar: React.FC = () => {
     const dispatch = useAppDispatch();
@@ -37,6 +38,7 @@ export const SideBar: React.FC = () => {
 
     useEffect(()=>{
         dispatch(getAllNotebooks());
+        dispatch(getNotes())
     }, [dispatch])
 
     return (

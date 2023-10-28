@@ -14,15 +14,15 @@ export const NoteList: React.FC = () => {
     const activeNotebook = notebooks.filter((notebook) => notebook.isActive === true);
     const [isTableView, setIsTableView] = useState(false);
 
-    const activeNotebookNotes = notes.filter((note) => note.notebookId === activeNotebook[0]?.id);
-    const [activeNotebookTitle, setTitleActiveNotebook] = useState('');
+    const activeNotebookNotes = notes.filter((note) => note.notebookId === activeNotebook[0]?._id);
+    const [activeNotebookTitle, setActiveNotebookTitle] = useState('');
 
     const handleListClick = () => {
         setIsTableView(!isTableView);
     };
 
     useEffect(() => {
-        setTitleActiveNotebook(activeNotebook[0]?.title);
+        setActiveNotebookTitle(activeNotebook[0]?.title);
     }, [activeNotebook, notebooks, notes]);
 
     return (
@@ -47,7 +47,7 @@ export const NoteList: React.FC = () => {
                     </p>
                 </div>
                 <div>
-                    <AddNoteModal notebookId={activeNotebook[0]?.id} />
+                    <AddNoteModal notebookId={activeNotebook[0]?._id} />
                 </div>
             </div>
             <div className='flex justify-end gap-3 cursor-pointer mb-5'>
@@ -65,11 +65,11 @@ export const NoteList: React.FC = () => {
                 {!isTableView &&
                     activeNotebookNotes.map((note) => (
                         <NoteItem
-                            key={note.id}
+                            key={note._id}
                             title={note.title}
                             description={note.description}
                             createdAt={note.createdAt.split('T')[0]}
-                            id={note.id}
+                            _id={note._id}
                         />
                     ))}
             </div>

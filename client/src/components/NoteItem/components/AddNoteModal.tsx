@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 
-import { addNote } from '../../../store/notes/note.slice';
+import { addNote } from '../../../store/notes/note.actions';
 import { newNoteType, IAddNoteNodalProps } from './types';
 
 export const AddNoteModal: React.FC<IAddNoteNodalProps> = (props) => {
@@ -17,7 +17,6 @@ export const AddNoteModal: React.FC<IAddNoteNodalProps> = (props) => {
     const handleSaveNote = () => {
         dispatch(
             addNote({
-                id: Math.round(Math.random() * 10000),
                 title: note.title,
                 description: note.description,
                 notebookId: props.notebookId,

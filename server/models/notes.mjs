@@ -12,12 +12,13 @@ const noteSchema = new mongoose.Schema({
         required: true,
     },
     createdAt: {
-        type: Date,
-        default: Date.now,
-        required: true,
+        type: String,
+        // default: Date.now,
+        // required: true,
     },
     updatedAt: {
-        type: Date,
+        type: String,
+        // type: Date,
     },
 });
 

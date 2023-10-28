@@ -1,23 +1,28 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { initialState } from './initialState';
-import { Note } from './initialState';
+import { getNotes, addNote, deleteNote, updateNote } from './note.actions';
 
 const notesSlice = createSlice({
     name: 'notes',
     initialState,
-    reducers: {
-        addNote(state, action: PayloadAction<Note>) {
+    reducers: {},
+    extraReducers: (builder) => {
+        builder.addCase(getNotes.fulfilled, (state, action) => {
+            state.list = action.payload;
+        });
+        builder.addCase(addNote.fulfilled, (state, action) => {
             state.list.push(action.payload);
             state.count += 1;
-        },
-        deleteNote(state, action: PayloadAction<number | null>) {
-            state.list = state.list.filter((note) => note.id !== action.payload);
+        });
+        builder.addCase(deleteNote.fulfilled, (state, action) => {
+            state.list = state.list.filter((note) => note._id !== action.payload);
             state.count -= 1;
-        },
-        updateNote(state, action: PayloadAction<Partial<Note>>) {
-            const { id, title, description, updatedAt } = action.payload;
+        });
+        builder.addCase(updateNote.fulfilled, (state, action) => {
+            const { _id, title, description, updatedAt } = action.payload;
+            console.log(description);
 
-            const noteToUpdate = state.list.find((note) => note.id === id);
+            const noteToUpdate = state.list.find((note) => note._id === _id);
 
             if (noteToUpdate) {
                 if (title !== undefined) {
@@ -30,10 +35,8 @@ const notesSlice = createSlice({
                     noteToUpdate.updatedAt = updatedAt;
                 }
             }
-        },
+        });
     },
 });
-
-export const { addNote, deleteNote, updateNote } = notesSlice.actions;
 
 export default notesSlice.reducer;

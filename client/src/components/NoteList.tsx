@@ -13,7 +13,7 @@ export const NoteList: React.FC = () => {
     const notebooks = useAppSelector((state) => state.notebooks.list);
     const activeNotebook = notebooks.filter((notebook) => notebook.isActive === true);
     const [isTableView, setIsTableView] = useState(false);
-    
+
     const activeNotebookNotes = notes.filter((note) => note.notebookId === activeNotebook[0]?._id);
     const [activeNotebookTitle, setActiveNotebookTitle] = useState('');
 
@@ -65,11 +65,11 @@ export const NoteList: React.FC = () => {
                 {!isTableView &&
                     activeNotebookNotes.map((note) => (
                         <NoteItem
-                            key={note.id}
+                            key={note._id}
                             title={note.title}
                             description={note.description}
                             createdAt={note.createdAt.split('T')[0]}
-                            id={note.id}
+                            _id={note._id}
                         />
                     ))}
             </div>

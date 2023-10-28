@@ -8,7 +8,7 @@ export const NoteTableView: React.FC = () => {
     const notebooks = useAppSelector((state) => state.notebooks.list);
     const activeNotebook = notebooks.filter((notebook) => notebook.isActive === true);
 
-    const activeNotebookNotes = notes.filter((note) => note.notebookId === activeNotebook[0]?.id);
+    const activeNotebookNotes = notes.filter((note) => note.notebookId === activeNotebook[0]?._id);
 
     return (
         <div className='flex flex-col'>
@@ -28,7 +28,7 @@ export const NoteTableView: React.FC = () => {
                             <tbody>
                                 {activeNotebookNotes.map((note, index) => (
                                     <NoteTableItem
-                                        key={note.id}
+                                        key={note._id}
                                         id={index + 1}
                                         title={note.title}
                                         description={note.description}

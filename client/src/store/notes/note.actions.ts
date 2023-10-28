@@ -59,4 +59,29 @@ const deleteNote = createAsyncThunk(ActionTypes.DELETE_NOTE, async (param: numbe
     }
 });
 
-export { getNotes, addNote, deleteNote };
+const updateNote = createAsyncThunk(
+    ActionTypes.EDIT_NOTE,
+    async (param: { _id: number; title: string; description: string; updatedAt: string }) => {
+        const response = await fetch(`${BASE_URL}${ApiPath.NOTES}`, {
+            method: HttpMethod.PATCH,
+            headers: {
+                'Content-Type': ContentType.JSON,
+            },
+            body: JSON.stringify({
+                _id: param._id,
+                title: param.title,
+                description: param.description,
+                updatedAt: param.updatedAt,
+            }),
+        });
+        if (response.ok) {
+            const data = await response.json();
+            console.log(data)
+            return data;
+        } else {
+            throw new Error('Failed to edit note title');
+        }
+    }
+);
+
+export { getNotes, addNote, deleteNote, updateNote };

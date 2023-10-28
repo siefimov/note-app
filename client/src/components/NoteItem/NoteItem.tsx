@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { GrEdit, GrFormTrash } from 'react-icons/gr';
 import { useAppDispatch } from '../../store/hooks';
 // import { updateNote } from '../../store/notes/note.slice';
-import { deleteNote, getNotes } from '../../store/notes/note.actions';
+import { deleteNote, getNotes, updateNote } from '../../store/notes/note.actions';
 
 import { ChangeNoteModal } from './components/ChangeNoteModal';
 import { INoteItemProps, updatedNoteType } from './types';
@@ -20,14 +20,14 @@ export const NoteItem: React.FunctionComponent<INoteItemProps> = ({ title, descr
     };
 
     const handleSaveNote = () => {
-        // dispatch(
-        //     updateNote({
-        //         id: _id,
-        //         title: note.title,
-        //         description: note.description,
-        //         updatedAt: new Date().toISOString(),
-        //     })
-        // );
+        dispatch(
+            updateNote({
+                _id: _id,
+                title: note.title,
+                description: note.description,
+                updatedAt: new Date().toISOString(),
+            })
+        );
 
         setShowModal(false);
     };

@@ -30,8 +30,9 @@ export const NotebookItem: FC<INotebookItemProps> = (props) => {
         setEditedNotebookTitle(notebook.title);
     };
 
-    const handleSaveEdit = () => {
-        dispatch(editNotebookTitle({ _id: editedNotebookId, title: editedNotebookTitle, isActive: true }));
+    const handleSaveEdit = async () => {
+        await dispatch(editNotebookTitle({ _id: editedNotebookId, title: editedNotebookTitle, isActive: true }));
+        dispatch(getAllNotebooks());
         setIsEditing(false);
         setEditedNotebookId(null);
         setEditedNotebookTitle('');

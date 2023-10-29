@@ -27,12 +27,13 @@ const addNotebook = createAsyncThunk(ActionTypes.ADD_NOTEBOOK, async (param: str
 });
 
 const editNotebookTitle = createAsyncThunk(ActionTypes.EDIT_NOTEBOOK, async (param: Notebook) => {
-    const response = await fetch(`${BASE_URL}${ApiPath.NOTEBOOKS}`, {
-        method: HttpMethod.PATCH,
+    const response = await fetch(`${BASE_URL}${ApiPath.NOTEBOOKS}/${param._id}`, {
+        method: HttpMethod.PUT,
         headers: {
             'Content-Type': ContentType.JSON,
         },
-        body: JSON.stringify({ _id: param._id, title: param.title }),
+        body: JSON.stringify({ title: param.title }),
+        // body: JSON.stringify({ _id: param._id, title: param.title }),
     });
     if (response.ok) {
         const data = await response.json();

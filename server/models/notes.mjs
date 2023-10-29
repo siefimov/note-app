@@ -9,6 +9,7 @@ const noteSchema = new mongoose.Schema({
     },
     notebookId: {
         type: Schema.Types.ObjectId,
+        ref: "Notebooks",
         required: true,
     },
     createdAt: {
@@ -22,4 +23,4 @@ const noteSchema = new mongoose.Schema({
     },
 });
 
-export const NoteModel = mongoose.model('Note', noteSchema);
+export const NotesModel = mongoose.model('Notes', noteSchema);

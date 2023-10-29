@@ -7,4 +7,4 @@ const notebookSchema = new mongoose.Schema({
     },
 });
 
-export const Notebook = mongoose.model('Notebooks', notebookSchema);
+export const NotebookModel = mongoose.model('Notebooks', notebookSchema);

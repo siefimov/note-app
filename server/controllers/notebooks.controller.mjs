@@ -1,4 +1,4 @@
-import * as notebookService from '../services/notebooks/notebooks.service.mjs';
+import * as notebookService from '../services/notebooks.service.mjs';
 
 const getAll = async (req, res, next) => {
     try {

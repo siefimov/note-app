@@ -1,9 +1,13 @@
 import express from 'express';
-import mongoose from 'mongoose';
+// import mongoose from 'mongoose';
+import * as notebooksController from '../controllers/notebooks.controller.mjs';
+
 const router = express.Router();
 
-import { Notebook } from '../models/notebook.mjs';
+// import { Notebook } from '../models/notebook.mjs';
 
+router.get('/', notebooksController.getAll);
+/*
 router.get('/', async (req, res) => {
     try {
         const allNotebooks = await Notebook.find({});
@@ -12,7 +16,9 @@ router.get('/', async (req, res) => {
         res.json(error);
     }
 });
-
+*/
+router.post('/', notebooksController.create);
+/*
 router.post('/', async (req, res) => {
     try {
         const newNotebook = new Notebook({
@@ -25,7 +31,9 @@ router.post('/', async (req, res) => {
         res.json(error);
     }
 });
-
+*/
+router.put('/:id', notebooksController.update);
+/*
 router.patch('/', async (req, res) => {
     try {
         const { _id, title } = req.body;
@@ -41,7 +49,9 @@ router.patch('/', async (req, res) => {
         res.status(500).json({ error: 'Error updating the notebook name.' });
     }
 });
-
+*/
+router.delete('/:id', notebooksController.remove);
+/*
 router.delete('/:_id', async (req, res) => {
     try {
         const notebookId = req.params._id;
@@ -62,5 +72,5 @@ router.delete('/:_id', async (req, res) => {
         res.status(500).json({ error: 'Error deleting the notebook' });
     }
 });
-
+*/
 export default router;

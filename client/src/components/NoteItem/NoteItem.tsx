@@ -19,8 +19,8 @@ export const NoteItem: React.FunctionComponent<INoteItemProps> = ({ title, descr
         dispatch(getNotes());
     };
 
-    const handleSaveNote = () => {
-        dispatch(
+    const handleSaveNote = async () => {
+        await dispatch(
             updateNote({
                 _id: _id,
                 title: note.title,
@@ -28,6 +28,7 @@ export const NoteItem: React.FunctionComponent<INoteItemProps> = ({ title, descr
                 updatedAt: new Date().toISOString(),
             })
         );
+        dispatch(getNotes());
 
         setShowModal(false);
     };

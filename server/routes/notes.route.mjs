@@ -1,9 +1,12 @@
 import express from 'express';
-import mongoose from 'mongoose';
+// import mongoose from 'mongoose';
+import * as notesController from '../controllers/notes.controller.mjs';
 const router = express.Router();
 
-import { NoteModel } from '../models/notes.mjs';
+// import { NotesModel } from '../models/notes.mjs';
 
+router.get('/', notesController.getAll);
+/*
 router.get('/', async (req, res) => {
     try {
         const allNotes = await NoteModel.find({});
@@ -12,7 +15,9 @@ router.get('/', async (req, res) => {
         res.status(500).json({ error: 'Error getting notes by notebook id' });
     }
 });
-
+*/
+router.post('/', notesController.create);
+/*
 router.post('/', async (req, res) => {
     try {
         const newNote = new NoteModel({
@@ -29,7 +34,9 @@ router.post('/', async (req, res) => {
         res.status(500).json('Error adding notes');
     }
 });
-
+*/
+router.put('/:id', notesController.update);
+/*
 router.patch('/', async (req, res) => {
     try {
         const { _id, title, description, updatedAt } = req.body;
@@ -51,7 +58,9 @@ router.patch('/', async (req, res) => {
         res.status(500).json({ error: 'Error updating the note.' });
     }
 });
-
+*/
+router.delete('/:id', notesController.remove);
+/*
 router.delete('/:_id', async (req, res) => {
     try {
         const noteId = req.params._id;
@@ -71,5 +80,5 @@ router.delete('/:_id', async (req, res) => {
         res.status(500).json({ error: 'Error deleting the note' });
     }
 });
-
+*/
 export default router;

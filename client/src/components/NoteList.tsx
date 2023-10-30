@@ -27,11 +27,7 @@ export const NoteList: React.FC = () => {
 
     return (
         <div className=' basis-[80%] w-[100%] p-6'>
-            <div className='mb-6'>
-                <h2>
-                    <Clock />
-                </h2>
-            </div>
+            <Clock />
             <div className='flex justify-between mb-6 border-b-2 pb-2'>
                 <div className='flex flex-col'>
                     <h3 className='text-teal-600 font-bold uppercase transition-all duration-150'>

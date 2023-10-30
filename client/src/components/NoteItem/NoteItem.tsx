@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { GrEdit, GrFormTrash } from 'react-icons/gr';
 import { useAppDispatch } from '../../store/hooks';
-// import { updateNote } from '../../store/notes/note.slice';
 import { deleteNote, getNotes, updateNote } from '../../store/notes/note.actions';
 
 import { ChangeNoteModal } from './components/ChangeNoteModal';

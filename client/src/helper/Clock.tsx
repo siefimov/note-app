@@ -25,7 +25,7 @@ const Clock: React.FC = () => {
     }, [currentDateTime]);
 
     return (
-        <div>
+        <div className='mb-6'>
             <p>{formattedDate}</p>
         </div>
     );

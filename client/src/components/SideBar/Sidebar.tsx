@@ -36,10 +36,10 @@ export const SideBar: React.FC = () => {
         }
     }, [isInputVisible]);
 
-    useEffect(()=>{
+    useEffect(() => {
         dispatch(getAllNotebooks());
-        dispatch(getNotes())
-    }, [dispatch])
+        dispatch(getNotes());
+    }, [dispatch]);
 
     return (
         <div className='flex flex-col basis-[20%] w-[100%] p-6 bg-slate-200 min-h-[100vh]'>

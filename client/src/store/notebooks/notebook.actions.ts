@@ -2,45 +2,59 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ActionTypes } from './actionTypes';
 import { Notebook } from './initialState';
 import { ApiPath, BASE_URL, ContentType, HttpMethod } from '../../constants';
+import { notebookService } from './notebook.service';
+import { AxiosResponse } from 'axios';
 
 const getAllNotebooks = createAsyncThunk(ActionTypes.NOTEBOOKS, async () => {
-    const response = await fetch(`${BASE_URL}${ApiPath.NOTEBOOKS}`);
-    const data = await response.json();
-    return data;
+    const response = await notebookService.getAll();
+
+    return response;
 });
 
 const addNotebook = createAsyncThunk(ActionTypes.ADD_NOTEBOOK, async (param: string) => {
-    const response = await fetch(`${BASE_URL}${ApiPath.NOTEBOOKS}`, {
-        method: HttpMethod.POST,
-        headers: {
-            'Content-Type': ContentType.JSON,
-        },
-        body: JSON.stringify({ title: param }),
-    });
-
-    if (response.ok) {
-        const data = await response.json();
-        return data;
-    } else {
+    try {
+        return await notebookService.create({ title: param });
+    } catch (error) {
         throw new Error('Failed to create notebook');
     }
+    // const response = await fetch(`${BASE_URL}${ApiPath.NOTEBOOKS}`, {
+    //     method: HttpMethod.POST,
+    //     headers: {
+    //         'Content-Type': ContentType.JSON,
+    //     },
+    //     body: JSON.stringify({ title: param }),
+    // });
+
+    // if (response.ok) {
+    //     const data = await response.json();
+    //     return data;
+    // } else {
+    //     throw new Error('Failed to create notebook');
+    // }
 });
 
 const editNotebookTitle = createAsyncThunk(ActionTypes.EDIT_NOTEBOOK, async (param: Notebook) => {
-    const response = await fetch(`${BASE_URL}${ApiPath.NOTEBOOKS}/${param._id}`, {
-        method: HttpMethod.PUT,
-        headers: {
-            'Content-Type': ContentType.JSON,
-        },
-        body: JSON.stringify({ title: param.title }),
-        // body: JSON.stringify({ _id: param._id, title: param.title }),
-    });
-    if (response.ok) {
-        const data = await response.json();
+    try {
+        const data = await notebookService.update(param._id, { title: param.title });
+        console.log(data);
         return data;
-    } else {
+    } catch (error) {
         throw new Error('Failed to edit notebook title');
     }
+
+    // const response = await fetch(`${BASE_URL}${ApiPath.NOTEBOOKS}/${param._id}`, {
+    //     method: HttpMethod.PUT,
+    //     headers: {
+    //         'Content-Type': ContentType.JSON,
+    //     },
+    //     body: JSON.stringify({ title: param.title }),
+    // });
+    // if (response.ok) {
+    //     const data = await response.json();
+    //     return data;
+    // } else {
+    //     throw new Error('Failed to edit notebook title');
+    // }
 });
 
 const deleteNotebook = createAsyncThunk(ActionTypes.DELETE_NOTEBOOK, async (param: number) => {

@@ -1,4 +1,5 @@
 import http from './http.common';
+// import { AxiosResponse } from 'axios';
 
 class GenericService<T> {
     private endpoint: string;
@@ -7,32 +8,35 @@ class GenericService<T> {
         this.endpoint = endpoint;
     }
 
-    getAll(): Promise<T[]> {
-        return http.get(`/${this.endpoint}`);
+    async getAll(): Promise<T[]> {
+        const response = await http.get(`/${this.endpoint}`);
+        return response.data;
     }
 
-    get(id: number): Promise<T> {
-        return http.get(`/${this.endpoint}/${id}`);
+    async getOne(id: number): Promise<T> {
+        const response = await http.get(`/${this.endpoint}/${id}`);
+        return response.data;
     }
 
-    create(data: T): Promise<T> {
-        return http.post(`/${this.endpoint}`, data);
+    async create(data: T): Promise<T> {
+        return await http.post(`/${this.endpoint}`, data);
+    }
+    
+    async update(id: number | null, data: T): Promise<T> {
+        return await http.put(`/${this.endpoint}/${id}`, data);
     }
 
-    update(id: number, data: T): Promise<T> {
-        return http.put(`/${this.endpoint}/${id}`, data);
-    }
-
-    delete(id: number): Promise<void> {
-        return http.delete(`/${this.endpoint}/${id}`);
+    async delete(id: number): Promise<void> {
+        await http.delete(`/${this.endpoint}/${id}`);
     }
 
     deleteAll(): Promise<void> {
         return http.delete(`/${this.endpoint}`);
     }
 
-    findByTitle(title: string): Promise<T[]> {
-        return http.get(`/${this.endpoint}?title=${title}`);
+    async findByTitle(title: string): Promise<T[]> {
+        const response = await http.get(`/${this.endpoint}?title=${title}`);
+        return response.data;
     }
 }
 

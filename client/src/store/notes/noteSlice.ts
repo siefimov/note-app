@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { initialState } from './initialState';
-import { getNotes, addNote, deleteNote, updateNote } from './note.actions';
+import { getNotes, addNote, deleteNote, updateNote } from './noteThunks';
 
 const notesSlice = createSlice({
     name: 'notes',

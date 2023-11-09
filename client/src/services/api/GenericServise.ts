@@ -21,7 +21,7 @@ class GenericService<T> {
     async create(data: T): Promise<T> {
         return await http.post(`/${this.endpoint}`, data);
     }
-    
+
     async update(id: number | null, data: T): Promise<T> {
         return await http.put(`/${this.endpoint}/${id}`, data);
     }

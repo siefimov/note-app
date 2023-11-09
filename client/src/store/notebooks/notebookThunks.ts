@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ActionTypes } from './actionTypes';
 import { Notebook } from './initialState';
 import { ApiPath, BASE_URL, ContentType, HttpMethod } from '../../constants';
-import { notebookService } from './notebook.service';
+import { notebookService } from './notebookService';
 import { AxiosResponse } from 'axios';
 
 const getAllNotebooks = createAsyncThunk(ActionTypes.NOTEBOOKS, async () => {
@@ -13,7 +13,8 @@ const getAllNotebooks = createAsyncThunk(ActionTypes.NOTEBOOKS, async () => {
 
 const addNotebook = createAsyncThunk(ActionTypes.ADD_NOTEBOOK, async (param: string) => {
     try {
-        return await notebookService.create({ title: param });
+        const data = await notebookService.create({ title: param });
+        return data;
     } catch (error) {
         throw new Error('Failed to create notebook');
     }

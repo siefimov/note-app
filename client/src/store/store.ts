@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
-import notebookSlice from './notebooks/notebook.slice';
-import noteSlice from './notes/note.slice';
+import notebookSlice from './notebooks/notebookSlice';
+import noteSlice from './notes/noteSlice';
 
 export const store = configureStore({
     reducer: {

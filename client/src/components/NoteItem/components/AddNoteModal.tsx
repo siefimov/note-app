@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 
-import { addNote } from '../../../store/notes/note.actions';
+import { addNote } from '../../../store/notes/noteThunks';
 import { newNoteType, IAddNoteNodalProps } from './types';
 
 export const AddNoteModal: React.FC<IAddNoteNodalProps> = (props) => {

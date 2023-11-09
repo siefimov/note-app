@@ -20,7 +20,7 @@ export const AddNoteModal: React.FC<IAddNoteNodalProps> = (props) => {
                 title: note.title,
                 description: note.description,
                 notebookId: props.notebookId,
-                isActive: false,
+                // isActive: false,
                 createdAt: new Date().toISOString(),
                 updatedAt: '',
             })

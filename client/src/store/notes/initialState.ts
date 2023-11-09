@@ -2,7 +2,7 @@ export interface Note {
     _id: number | null;
     title: string;
     description: string;
-    isActive: boolean;
+    // isActive: boolean;
     notebookId: number | null;
     createdAt: string;
     updatedAt: string;

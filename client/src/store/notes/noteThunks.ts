@@ -1,85 +1,73 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ActionTypes } from './actionTypes';
-import { ApiPath, BASE_URL, ContentType, HttpMethod } from '../../constants';
+import { noteService } from './noteService';
+import { AxiosResponse } from 'axios';
 
-interface addNoteParam {
+export interface addNoteParam {
     title: string;
     description: string;
-    notebookId: number | null;
-    isActive: boolean;
-    createdAt: string;
-    updatedAt: string;
+    notebookId?: number | null;
+    // isActive: boolean;
+    createdAt?: string;
+    updatedAt?: string;
 }
 
-const getNotes = createAsyncThunk(ActionTypes.GET_NOTES, async () => {
-    const response = await fetch(`${BASE_URL}${ApiPath.NOTES}`);
+type NoteResponse = {
+    title: string;
+    description: string;
+    notebookId: string;
+    cretedAt: string;
+    updatedAt: string;
+    _id: string;
+    __v: string;
+};
 
-    if (response.ok) {
-        const data = await response.json();
+const getNotes = createAsyncThunk(ActionTypes.GET_NOTES, async () => {
+    try {
+        const data = await noteService.getAll();
         return data;
-    } else {
+    } catch (error) {
         throw new Error('Faild to get Notes');
     }
 });
 
 const addNote = createAsyncThunk(ActionTypes.ADD_NOTE, async (param: addNoteParam) => {
-    const { title, description, notebookId, isActive, createdAt, updatedAt } = param;
-    const response = await fetch(`${BASE_URL}${ApiPath.NOTES}`, {
-        method: HttpMethod.POST,
-        headers: {
-            'Content-Type': ContentType.JSON,
-        },
-        body: JSON.stringify({
-            title,
-            description,
-            notebookId,
-            isActive,
-            createdAt,
-            updatedAt,
-        }),
-    });
+    try {
+        const response = await noteService.create(param);
+        const note: NoteResponse = response.data;
 
-    if (response.ok) {
-        const data = await response.json();
-        return data;
-    } else {
-        throw new Error('Failed to create notebook');
+        return note;
+    } catch (error) {
+        throw new Error('Faild to create note');
     }
 });
 
-const deleteNote = createAsyncThunk(ActionTypes.DELETE_NOTE, async (param: number | null) => {
-    const response = await fetch(`${BASE_URL}${ApiPath.NOTES}/${param}`, {
-        method: HttpMethod.DELETE,
-    });
-    if (response.ok) {
-        const data = await response.json();
-        return data;
-    } else {
-        throw new Error('Failed to delete notebook');
+const deleteNote = createAsyncThunk(ActionTypes.DELETE_NOTE, async (id: number) => {
+    try {
+        const response = await noteService.delete(id);
+        console.log(response);
+        return response;
+    } catch (error) {
+        throw new Error('Failed to delete note');
     }
 });
 
 const updateNote = createAsyncThunk(
     ActionTypes.EDIT_NOTE,
     async (param: { _id: number; title: string; description: string; updatedAt: string }) => {
-        const response = await fetch(`${BASE_URL}${ApiPath.NOTES}/${param._id}`, {
-            method: HttpMethod.PUT,
-            headers: {
-                'Content-Type': ContentType.JSON,
-            },
-            body: JSON.stringify({
-                // _id: param._id,
+        try {
+            const id = param._id;
+            const data: { title: string; description: string; updatedAt: string } = {
                 title: param.title,
                 description: param.description,
                 updatedAt: param.updatedAt,
-            }),
-        });
-        if (response.ok) {
-            const data = await response.json();
-            console.log(data);
-            return data;
-        } else {
-            throw new Error('Failed to edit note title');
+            };
+
+            const response = await noteService.update(id, data);
+            console.log(response);
+            return response?.data;
+        } catch (error) {
+            throw new Error('Failed to update note');
         }
     }
 );

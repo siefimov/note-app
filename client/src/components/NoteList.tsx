@@ -4,12 +4,12 @@ import { useAppSelector } from '../store/hooks';
 import Clock from '../helper/Clock';
 import { NoteItem } from './NoteItem/NoteItem';
 import { NoteTableView } from './NoteTableView/NoteTableView';
+import ToggleViewButton from './ToggleViewButton';
 
 import { AddNoteModal } from './NoteItem/components/AddNoteModal';
-import { GrList, GrProjects } from 'react-icons/gr';
 
 export const NoteList: React.FC = () => {
-    const notes = useAppSelector((state) => state.notes.list);
+    const notes = useAppSelector((state) => state.notes.data);
     const notebooks = useAppSelector((state) => state.notebooks.list);
     const activeNotebook = notebooks.filter((notebook) => notebook.isActive === true);
     const [isTableView, setIsTableView] = useState(false);
@@ -46,14 +46,7 @@ export const NoteList: React.FC = () => {
                     <AddNoteModal notebookId={activeNotebook[0]?._id} />
                 </div>
             </div>
-            <div className='flex justify-end gap-3 cursor-pointer mb-5'>
-                <div className='border border-slate-300 p-2 rounded hover:bg-slate-50'>
-                    <GrList onClick={handleListClick} />
-                </div>
-                <div className='border border-slate-300 p-2 rounded hover:bg-slate-50'>
-                    <GrProjects onClick={handleListClick} />
-                </div>
-            </div>
+            <ToggleViewButton isTableView={isTableView} handleListClick={handleListClick} />
 
             {isTableView && <NoteTableView />}
 

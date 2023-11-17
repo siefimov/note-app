@@ -3,7 +3,7 @@ import { NoteTableItem } from './NoteTableItem';
 import './styles.css';
 
 export const NoteTableView: React.FC = () => {
-    const notes = useAppSelector((state) => state.notes.list);
+    const notes = useAppSelector((state) => state.notes.data);
 
     const notebooks = useAppSelector((state) => state.notebooks.list);
     const activeNotebook = notebooks.filter((notebook) => notebook.isActive === true);
@@ -12,8 +12,8 @@ export const NoteTableView: React.FC = () => {
 
     return (
         <div className='flex flex-col'>
-            <div className='sm:-mx-6 lg:-mx-8'>
-                <div className='inline-block min-w-full py-2 sm:px-6 lg:px-8'>
+            <div className=''>
+                <div className='inline-block min-w-full py-2'>
                     <div className='overflow-x-hidden'>
                         <table className='table-auto min-w-[75vw] text-left text-sm font-light'>
                             <thead className='border-b font-medium dark:border-neutral-500'>

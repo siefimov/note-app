@@ -1,9 +1,9 @@
 import { FC, useEffect, useState, useRef } from 'react';
 import { useAppDispatch } from '../../store/hooks';
-import { changeActiveNotebook } from '../../store/notebooks/notebook.slice';
+import { changeActiveNotebook } from '../../store/notebooks/notebookSlice';
 import { Notebook } from '../../store/notebooks/initialState';
 import { GrEdit, GrFormTrash } from 'react-icons/gr';
-import { editNotebookTitle, deleteNotebook, getAllNotebooks } from '../../store/notebooks/notebook.actions';
+import { editNotebookTitle, deleteNotebook, getAllNotebooks } from '../../store/notebooks/notebookThunks';
 
 interface INotebookItemProps {
     _id: number | null;

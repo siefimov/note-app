@@ -1,23 +1,23 @@
-export interface Note {
-    _id: number | null;
+export type Note = {
+    _id?: string;
     title: string;
     description: string;
-    isActive: boolean;
-    notebookId: number | null;
-    createdAt: string;
-    updatedAt: string;
-}
+    notebookId?: number | null;
+    createdAt?: string;
+    updatedAt?: string;
+    __v?: number;
+};
 
-interface NotesState {
-    list: Note[];
+export interface NotesState {
+    data: Note[];
     count: number;
     loading: boolean;
     error: string | null;
 }
 
-export const initialState: NotesState = {
-    list: [],
+export const initialState = {
+    data: [],
     count: 0,
     loading: false,
     error: null,
-};
+} as NotesState;

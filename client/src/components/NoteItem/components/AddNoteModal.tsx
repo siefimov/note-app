@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 
-import { addNote } from '../../../store/notes/note.actions';
+import { addNote } from '../../../store/notes/noteThunks';
 import { newNoteType, IAddNoteNodalProps } from './types';
 
 export const AddNoteModal: React.FC<IAddNoteNodalProps> = (props) => {
@@ -20,7 +20,7 @@ export const AddNoteModal: React.FC<IAddNoteNodalProps> = (props) => {
                 title: note.title,
                 description: note.description,
                 notebookId: props.notebookId,
-                isActive: false,
+                // isActive: false,
                 createdAt: new Date().toISOString(),
                 updatedAt: '',
             })

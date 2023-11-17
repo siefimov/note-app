@@ -5,8 +5,8 @@ import { Logo } from './Logo';
 import { SidebarHeader } from './SidebarHeader';
 import { NotebookList } from './NotebookList';
 
-import { getAllNotebooks, addNotebook } from '../../store/notebooks/notebook.actions';
-import { getNotes } from '../../store/notes/note.actions';
+import { getAllNotebooks, addNotebook } from '../../store/notebooks/notebookThunks';
+import { getNotes } from '../../store/notes/noteThunks';
 
 export const SideBar: React.FC = () => {
     const dispatch = useAppDispatch();
@@ -21,9 +21,10 @@ export const SideBar: React.FC = () => {
         setIsInputVisible((isInputVisible) => !isInputVisible);
     };
 
-    const handleKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    const handleKeyUp = async (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter') {
-            dispatch(addNotebook(newNotebook));
+            await dispatch(addNotebook(newNotebook));
+            dispatch(getAllNotebooks());
 
             setNewNotebook('');
             setIsInputVisible(false);

@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { initialState } from './initialState';
 // import { Notebook } from './initialState';
-import { getAllNotebooks, addNotebook, editNotebookTitle, deleteNotebook } from './notebook.actions';
+import { getAllNotebooks, addNotebook, editNotebookTitle, deleteNotebook } from './notebookThunks';
 
 const notebooksSlice = createSlice({
     name: 'notebooks',

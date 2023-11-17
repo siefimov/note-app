@@ -5,34 +5,11 @@
         "moduleResolution": "node",
         "allowJs": true,
         "checkJs": true,
-        "outDir": "dist", // Compiled Output Directory
+        "outDir": "dist",
         "rootDir": "",
         "esModuleInterop": true,
         "resolveJsonModule": true
     },
-    "include": [
-        "src/**/*.js", // Every js file inside src folder
-        "src/**/*.ts", // Every ts file inside src folder
-        "server.ts"
-    ],
-    "exclude": [
-        "node_modules",
-        "dist" // Exclude compiled output by Typescript compiler
-    ]
+    "include": ["src/**/*.js", "src/**/*.ts", "server.ts"],
+    "exclude": ["node_modules", "dist"]
 }
-
-// {
-//   "compilerOptions": {
-//     "target": "es2016",
-//     "module": "commonjs",
-//     "esModuleInterop": true,
-//     "forceConsistentCasingInFileNames": true,
-//     "strict": true,
-//     "skipLibCheck": true,
-//     "lib": [
-//       "dom",
-//       "es2015.promise",
-//       "es5"
-//     ]
-//   }
-// }

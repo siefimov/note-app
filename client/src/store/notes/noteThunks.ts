@@ -1,40 +1,41 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ActionTypes } from './actionTypes';
 import { noteService } from './noteService';
-import { AxiosResponse } from 'axios';
+import { NotesState } from './initialState';
+import { Note } from './initialState';
 
-export interface addNoteParam {
-    title: string;
-    description: string;
-    notebookId?: number | null;
-    // isActive: boolean;
-    createdAt?: string;
-    updatedAt?: string;
-}
+// export interface addNoteParam {
+//     title: string;
+//     description: string;
+//     notebookId?: number | null;
+//     createdAt?: string;
+//     updatedAt?: string;
+// }
 
-type NoteResponse = {
-    title: string;
-    description: string;
-    notebookId: string;
-    cretedAt: string;
-    updatedAt: string;
-    _id: string;
-    __v: string;
-};
+// type NoteResponse = {
+//     title: string;
+//     description: string;
+//     notebookId: string;
+//     cretedAt: string;
+//     updatedAt: string;
+//     _id: string;
+//     __v: string;
+// };
 
-const getNotes = createAsyncThunk(ActionTypes.GET_NOTES, async () => {
+const getNotes = createAsyncThunk<Note[]>(ActionTypes.GET_NOTES, async () => {
     try {
-        const data = await noteService.getAll();
-        return data;
+        const notes = await noteService.getAll();
+        console.log(notes);
+        return notes;
     } catch (error) {
         throw new Error('Faild to get Notes');
     }
 });
 
-const addNote = createAsyncThunk(ActionTypes.ADD_NOTE, async (param: addNoteParam) => {
+const addNote = createAsyncThunk(ActionTypes.ADD_NOTE, async (param: Note) => {
     try {
         const response = await noteService.create(param);
-        const note: NoteResponse = response.data;
+        const note = response.data;
 
         return note;
     } catch (error) {
@@ -42,11 +43,10 @@ const addNote = createAsyncThunk(ActionTypes.ADD_NOTE, async (param: addNotePara
     }
 });
 
-const deleteNote = createAsyncThunk(ActionTypes.DELETE_NOTE, async (id: number) => {
+const deleteNote = createAsyncThunk(ActionTypes.DELETE_NOTE, async ( id: string ) => {
     try {
-        const response = await noteService.delete(id);
-        console.log(response);
-        return response;
+        await noteService.delete(id);
+        
     } catch (error) {
         throw new Error('Failed to delete note');
     }
@@ -63,9 +63,8 @@ const updateNote = createAsyncThunk(
                 updatedAt: param.updatedAt,
             };
 
-            const response = await noteService.update(id, data);
-            console.log(response);
-            return response?.data;
+            return await noteService.update(id, data);
+            
         } catch (error) {
             throw new Error('Failed to update note');
         }

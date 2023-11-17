@@ -1,4 +1,4 @@
 import GenericService from '../../services/api/GenericServise';
-import { addNoteParam } from './noteThunks';
+import { Note } from './initialState';
 
-export const noteService = new GenericService<addNoteParam>('notes');
+export const noteService = new GenericService<Note>('notes');

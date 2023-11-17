@@ -13,5 +13,5 @@ export type newNoteType = {
 };
 
 export interface IAddNoteNodalProps {
-    notebookId: number | null;
+    notebookId: string | null;
 }

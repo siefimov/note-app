@@ -1,26 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ActionTypes } from './actionTypes';
 import { noteService } from './noteService';
-import { NotesState } from './initialState';
 import { Note } from './initialState';
-
-// export interface addNoteParam {
-//     title: string;
-//     description: string;
-//     notebookId?: number | null;
-//     createdAt?: string;
-//     updatedAt?: string;
-// }
-
-// type NoteResponse = {
-//     title: string;
-//     description: string;
-//     notebookId: string;
-//     cretedAt: string;
-//     updatedAt: string;
-//     _id: string;
-//     __v: string;
-// };
 
 const getNotes = createAsyncThunk<Note[]>(ActionTypes.GET_NOTES, async () => {
     try {
@@ -43,10 +24,9 @@ const addNote = createAsyncThunk(ActionTypes.ADD_NOTE, async (param: Note) => {
     }
 });
 
-const deleteNote = createAsyncThunk(ActionTypes.DELETE_NOTE, async ( id: string ) => {
+const deleteNote = createAsyncThunk(ActionTypes.DELETE_NOTE, async (id: string | undefined) => {
     try {
         await noteService.delete(id);
-        
     } catch (error) {
         throw new Error('Failed to delete note');
     }
@@ -54,7 +34,7 @@ const deleteNote = createAsyncThunk(ActionTypes.DELETE_NOTE, async ( id: string 
 
 const updateNote = createAsyncThunk(
     ActionTypes.EDIT_NOTE,
-    async (param: { _id: number; title: string; description: string; updatedAt: string }) => {
+    async (param: { _id: string | undefined; title: string; description: string; updatedAt: string }) => {
         try {
             const id = param._id;
             const data: { title: string; description: string; updatedAt: string } = {
@@ -64,7 +44,6 @@ const updateNote = createAsyncThunk(
             };
 
             return await noteService.update(id, data);
-            
         } catch (error) {
             throw new Error('Failed to update note');
         }

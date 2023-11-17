@@ -1,7 +1,8 @@
 const AppPath = {
-  ROOT: "/",
-  NOTEBOOKS: "/notebooks",
-  ANY: "*",
+    ROOT: '/',
+    NOTEBOOKS: '/notebooks',
+    NOTES: '/notes',
+    ANY: '*',
 };
 
 export { AppPath };

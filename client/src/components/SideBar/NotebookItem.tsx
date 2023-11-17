@@ -1,9 +1,12 @@
 import { FC, useEffect, useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import { useAppDispatch } from '../../store/hooks';
-import { changeActiveNotebook } from '../../store/notebooks/notebookSlice';
 import { Notebook } from '../../store/notebooks/initialState';
-import { GrEdit, GrFormTrash } from 'react-icons/gr';
+import { changeActiveNotebook } from '../../store/notebooks/notebookSlice';
 import { editNotebookTitle, deleteNotebook, getAllNotebooks } from '../../store/notebooks/notebookThunks';
+import { GrEdit, GrFormTrash } from 'react-icons/gr';
+import { AppPath } from '../../constants';
 
 interface INotebookItemProps {
     _id: number | null;
@@ -14,6 +17,7 @@ interface INotebookItemProps {
 
 export const NotebookItem: FC<INotebookItemProps> = (props) => {
     const { _id, isActive, title, notebook } = props;
+    const navigate = useNavigate();
 
     const inputRef: React.RefObject<HTMLInputElement> = useRef(null);
 
@@ -59,6 +63,7 @@ export const NotebookItem: FC<INotebookItemProps> = (props) => {
     const handleIsNotebookActive = (notebookId: number | null) => {
         if (isEditing) return;
         dispatch(changeActiveNotebook(notebookId));
+        navigate(AppPath.NOTES);
     };
 
     useEffect(() => {

@@ -1,5 +1,4 @@
-import http from './http.common';
-// import { AxiosResponse } from 'axios';
+import http from './http.api';
 
 class GenericService<T> {
     private endpoint: string;
@@ -26,7 +25,7 @@ class GenericService<T> {
         return await http.put(`/${this.endpoint}/${id}`, data);
     }
 
-    async delete(id: number): Promise<void> {
+    async delete(id: string): Promise<void> {
         await http.delete(`/${this.endpoint}/${id}`);
     }
 

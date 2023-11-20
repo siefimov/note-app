@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from 'react';
 import { useAppSelector } from '../store/hooks';
 
-import Clock from '../helper/Clock';
+// import Clock from '../helper/Clock';
 import { HeaderInfo } from './HeaderInfo';
 
 export const Header: FC = () => {
@@ -18,7 +18,7 @@ export const Header: FC = () => {
 
     return (
         <>
-            <Clock />
+            {/* <Clock /> */}
             <HeaderInfo
                 activeNotebook={activeNotebook}
                 activeNotebookNotes={activeNotebookNotes}

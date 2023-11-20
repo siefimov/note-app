@@ -43,7 +43,7 @@ export const SideBar: React.FC = () => {
     }, [dispatch]);
 
     return (
-        <div className='flex flex-col basis-[20%] w-[100%] p-6 bg-slate-200 min-h-[100vh]'>
+        <div className='flex flex-col basis-[20%] w-[100%] p-6 bg-slate-100 min-h-[100vh]'>
             <Logo />
             <SidebarHeader onClick={handleClick} />
             {notebooks && <NotebookList />}
